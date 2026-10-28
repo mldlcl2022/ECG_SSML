@@ -6,6 +6,9 @@ The paper was published in KIISE Transactions on Computing Practices (KTCP) in S
 
 Paper: [Multi-View Self-Supervised Learning Method Comparison with ECG Signals and Images](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003381127)
 
+<br>
+<br>
+
 ![framework](framework.png)
 
 ## Dataset
