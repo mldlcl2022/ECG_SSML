@@ -1,6 +1,10 @@
-# ECG_SSML
-[Self-Supervised Multimodal Learning Method Comparison with ECG Signals and Images](https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12989382), KIISE Transactions on Computing Practices (KTCP), 2026.
+# ECG Self-Supervised Mutliview Learning
 
+This repository contains the official implementation of the paper "Multi-View Self-Supervised Learning Method Comparison with ECG Signals and Images".
+
+The paper was published in KIISE Transactions on Computing Practices (KTCP) in September 2026, a peer-reviewed Korean academic journal indexed in the Korea Citation Index (KCI) and published by the Korean Institute of Information Scientists and Engineers (KIISE).
+
+Paper: [Multi-View Self-Supervised Learning Method Comparison with ECG Signals and Images](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003381127)
 
 ![framework](framework.png)
 
