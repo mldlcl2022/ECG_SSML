@@ -1,0 +1,113 @@
+seed: 7
+output_dir: ./results_finetune
+exp_name: contrastive_finetune
+resume: null
+start_epoch: 0
+mode: finetune
+device: cuda
+
+ddp:
+  world_size: 1
+  rank: -1
+  gpu: 0
+  dist_url: env://
+  dist_backend: nccl
+  distributed: false
+
+model:
+  num_classes: 5
+  type: contrastive
+  signal_pretrain_weight_path: pretrained_signal_encoder_path 
+  image_pretrain_weight_path: pretrained_image_encoder_path
+
+dataset:
+  signal_path: your_signal_dataset_path
+  image_path: your_image_dataset_path
+
+  train_csv: your_train_csv_path
+  valid_csv: your_valid_csv_path
+  test_csv: your_test_csv_path
+
+  labels: True
+
+  fs: 500
+
+  rand_augment:
+    use: true
+    kwargs:
+      op_names:
+      - shift
+      - cutout
+      - drop
+      - flip
+      - erase
+      - sine
+      - partial_sine
+      - partial_white_noise
+      level: 10
+      num_layers: 2
+      prob: 0.5
+
+  train_transforms:
+  - random_crop:
+      crop_length: 2250
+  - highpass_filter:
+      fs: 250
+      cutoff: 0.67
+  - lowpass_filter:
+      fs: 250
+      cutoff: 40
+  - standardize:
+      axis: [-1, -2]
+
+  eval_transforms:
+  - n_crop:
+      crop_length: 2250
+      num_segments: 3
+  - highpass_filter:
+      fs: 250
+      cutoff: 0.67
+  - lowpass_filter:
+      fs: 250
+      cutoff: 40
+  - standardize:
+      axis: [-1, -2]
+
+dataloader:
+  batch_size: 16
+  num_workers: 8
+  pin_memory: True
+
+train:
+  epochs: 1
+  accum_iter: 1
+  warmup_epochs: 5
+  min_lr: 0
+  blr: 1.0e-3
+  lr: null
+  weight_decay: 0.05
+  dist_eval: false
+  max_norm: null
+  optimizer: adamw
+
+loss:
+  name: bce
+
+metric:
+  task: multilabel
+  compute_on_cpu: true
+  sync_on_compute: false
+  num_labels: 5
+  target_metrics:
+  - Accuracy
+  - F1Score:
+      average: macro
+  - AUROC:
+      average: macro
+  - Precision:
+      average: macro
+  - Recall:
+      average: macro
+
+test:
+  target_metric: MultilabelF1Score

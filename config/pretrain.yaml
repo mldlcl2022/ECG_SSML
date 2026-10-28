@@ -1,0 +1,69 @@
+seed: 7
+output_dir: ./results_pretrain
+exp_name: contrastive_pretrain
+resume: null
+start_epoch: 0
+device: cuda
+
+ddp:
+  world_size: 1
+  rank: -1
+  gpu: 0
+  dist_url: env://
+  dist_backend: nccl
+  distributed: false
+
+model:
+  type: contrastive (options: contrastive, generative)
+  
+dataset:
+  signal_path: your_signal_dataset_path
+  image_path: your_image_dataset_path
+
+  train_csv: your_train_csv_path
+  valid_csv: your_valid_csv_path
+
+  fs: 500
+
+  train_transforms:
+  - random_crop:
+      crop_length: 2250
+  - highpass_filter:
+      fs: 250
+      cutoff: 0.67
+  - lowpass_filter:
+      fs: 250
+      cutoff: 40
+  - standardize:
+      axis: [-1, -2]
+
+  eval_transforms:
+  - n_crop:
+      crop_length: 2250
+      num_segments: 3
+  - highpass_filter:
+      fs: 250
+      cutoff: 0.67
+  - lowpass_filter:
+      fs: 250
+      cutoff: 40
+  - standardize:
+      axis: [-1, -2]
+
+dataloader:
+  batch_size: 32
+  num_workers: 8
+  pin_memory: True
+
+train:
+  epochs: 1
+  accum_iter: 1
+  warmup_epochs: 40
+  min_lr: 0
+  blr: 1.2e-3
+  lr: null
+  weight_decay: 0.01
+  dist_eval: false
+  optimizer: adamw
+  optimizer_kwargs:
+    betas: [0.9, 0.95]
