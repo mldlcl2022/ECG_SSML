@@ -1,4 +1,4 @@
-# ECG Self-Supervised Mutliview Learning
+# ECG Self-Supervised Mutli-view Learning
 
 This repository contains the official implementation of the paper "Multi-View Self-Supervised Learning Method Comparison with ECG Signals and Images".
 
